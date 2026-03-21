@@ -23,6 +23,7 @@
   <PropertyGroup>
     <ExcludeVulkan>false</ExcludeVulkan>
     <ExcludeD3D11>false</ExcludeD3D11>
+    <ExcludeMetal>false</ExcludeMetal>
     <ExcludeOpenGL>false</ExcludeOpenGL>
   </PropertyGroup>
 

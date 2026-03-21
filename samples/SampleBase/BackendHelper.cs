@@ -6,7 +6,7 @@ namespace SampleBase
 {
     /// <summary>
     /// Parses the VELDRID_BACKEND environment variable to select a graphics backend for testing.
-    /// Accepts: d3d11, vulkan, opengl, opengles. Falls back to the platform default if not set.
+    /// Accepts: d3d11, vulkan, metal, opengl, opengles. Falls back to the platform default if not set.
     /// </summary>
     public static class BackendHelper
     {
@@ -19,10 +19,11 @@ namespace SampleBase
                 {
                     "d3d11" or "direct3d11" => GraphicsBackend.Direct3D11,
                     "vulkan" or "vk" => GraphicsBackend.Vulkan,
+                    "metal" or "mtl" => GraphicsBackend.Metal,
                     "opengl" or "gl" => GraphicsBackend.OpenGL,
                     "opengles" or "gles" => GraphicsBackend.OpenGLES,
                     _ => throw new InvalidOperationException(
-                        $"Unknown VELDRID_BACKEND value: '{envBackend}'. Use: d3d11, vulkan, opengl, opengles")
+                        $"Unknown VELDRID_BACKEND value: '{envBackend}'. Use: d3d11, vulkan, metal, opengl, opengles")
                 };
             }
             return VeldridStartup.GetPlatformDefaultBackend();

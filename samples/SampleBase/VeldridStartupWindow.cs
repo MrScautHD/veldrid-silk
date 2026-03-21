@@ -50,7 +50,7 @@ namespace SampleBase
 #if DEBUG
             options.Debug = true;
 #endif
-            GraphicsBackend backend = BackendHelper.GetPreferredBackend();
+            GraphicsBackend backend = GraphicsBackend.Direct3D11;
             VeldridStartup.CreateWindowAndGraphicsDevice(_wci, options, backend, out _window, out _gd);
             _window.Resized += () => { _windowResized = true; };
             _window.KeyDown += OnKeyDown;

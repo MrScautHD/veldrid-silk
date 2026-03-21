@@ -183,6 +183,7 @@ namespace Veldrid
         /// The nativeTexture parameter is backend-specific, and the type of data passed in depends on which graphics API is
         /// being used.
         /// When using the Vulkan backend, nativeTexture must be a valid VkImage handle.
+        /// When using the Metal backend, nativeTexture must be a valid MTLTexture pointer.
         /// When using the D3D11 backend, nativeTexture must be a valid pointer to an ID3D11Texture1D, ID3D11Texture2D, or
         /// ID3D11Texture3D.
         /// When using the OpenGL backend, nativeTexture must be a valid OpenGL texture name.
@@ -202,6 +203,7 @@ namespace Veldrid
         /// The nativeTexture parameter is backend-specific, and the type of data passed in depends on which graphics API is
         /// being used.
         /// When using the Vulkan backend, nativeTexture must be a valid VkImage handle.
+        /// When using the Metal backend, nativeTexture must be a valid MTLTexture pointer.
         /// When using the D3D11 backend, nativeTexture must be a valid pointer to an ID3D11Texture1D, ID3D11Texture2D, or
         /// ID3D11Texture3D.
         /// When using the OpenGL backend, nativeTexture must be a valid OpenGL texture name.
@@ -217,6 +219,7 @@ namespace Veldrid
         /// <returns></returns>
         protected abstract Texture CreateTextureCore(ulong nativeTexture, ref TextureDescription description);
 
+        // TODO: private protected
         /// <summary>
         /// </summary>
         /// <param name="description"></param>
@@ -277,6 +280,7 @@ namespace Veldrid
             return CreateTextureViewCore(ref description);
         }
 
+        // TODO: private protected
         /// <summary>
         /// </summary>
         /// <param name="description"></param>
@@ -340,6 +344,7 @@ namespace Veldrid
             return CreateBufferCore(ref description);
         }
 
+        // TODO: private protected
         /// <summary>
         /// </summary>
         /// <param name="description"></param>

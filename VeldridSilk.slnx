@@ -22,6 +22,7 @@
   <Folder Name="/src/">
     <Project Path="src/Veldrid.ImageSharp/Veldrid.ImageSharp.csproj" />
     <Project Path="src/Veldrid.ImGui/Veldrid.ImGui.csproj" />
+    <Project Path="src/Veldrid.MetalBindings/Veldrid.MetalBindings.csproj" />
     <Project Path="src/Veldrid.RenderDoc/Veldrid.RenderDoc.csproj" />
     <Project Path="src/Veldrid.SDL2/Veldrid.SDL2.csproj" />
     <Project Path="src/Veldrid.StartupUtilities/Veldrid.StartupUtilities.csproj" />

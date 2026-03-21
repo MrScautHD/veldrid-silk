@@ -123,6 +123,12 @@ namespace Veldrid.StartupUtilities
 #else
                     throw new VeldridException("OpenGL support has not been included in this configuration of Veldrid");
 #endif
+                case GraphicsBackend.Metal:
+#if !EXCLUDE_METAL_BACKEND
+                    return CreateMetalGraphicsDevice(options, window);
+#else
+                    throw new VeldridException("Metal support has not been included in this configuration of Veldrid");
+#endif
                 case GraphicsBackend.OpenGLES:
 #if !EXCLUDE_OPENGL_BACKEND
                     return CreateDefaultOpenGLGraphicsDevice(options, window, preferredBackend);
@@ -160,6 +166,28 @@ namespace Veldrid.StartupUtilities
             }
         }
 
+#if !EXCLUDE_METAL_BACKEND
+        private static GraphicsDevice CreateMetalGraphicsDevice(GraphicsDeviceOptions options, Sdl2Window window)
+            => CreateMetalGraphicsDevice(options, window, options.SwapchainSrgbFormat);
+
+        private static GraphicsDevice CreateMetalGraphicsDevice(
+            GraphicsDeviceOptions options,
+            Sdl2Window window,
+            bool colorSrgb)
+        {
+            SwapchainSource source = GetSwapchainSource(window);
+            SwapchainDescription swapchainDesc = new SwapchainDescription(
+                source,
+                (uint)window.Width,
+                (uint)window.Height,
+                options.SwapchainDepthFormat,
+                options.SyncToVerticalBlank,
+                colorSrgb);
+
+            return GraphicsDevice.CreateMetal(options, swapchainDesc);
+        }
+#endif
+
         public static GraphicsBackend GetPlatformDefaultBackend()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -176,8 +204,12 @@ namespace Veldrid.StartupUtilities
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-#if !EXCLUDE_VULKAN_BACKEND
-                return GraphicsBackend.Vulkan; // Via MoltenVK
+#if !EXCLUDE_METAL_BACKEND
+                return GraphicsDevice.IsBackendSupported(GraphicsBackend.Metal)
+                    ? GraphicsBackend.Metal
+                    : GraphicsBackend.OpenGL;
+#elif !EXCLUDE_VULKAN_BACKEND
+                return GraphicsBackend.Vulkan;
 #elif !EXCLUDE_OPENGL_BACKEND
                 return GraphicsBackend.OpenGL;
 #else

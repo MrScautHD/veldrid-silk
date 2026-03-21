@@ -284,6 +284,11 @@ namespace Veldrid
                     string resourceName = name + ".spv";
                     return GetEmbeddedResourceBytes(resourceName);
                 }
+                case GraphicsBackend.Metal:
+                {
+                    string resourceName = name + ".metallib";
+                    return GetEmbeddedResourceBytes(resourceName);
+                }
                 default:
                     throw new NotImplementedException();
             }
@@ -302,7 +307,7 @@ namespace Veldrid
             using (Stream s = _assembly.GetManifestResourceStream(resourceName))
             {
                 byte[] ret = new byte[s.Length];
-                s.ReadExactly(ret);
+                s.Read(ret, 0, (int)s.Length);
                 return ret;
             }
         }
