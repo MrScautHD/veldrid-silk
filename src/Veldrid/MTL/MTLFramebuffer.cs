@@ -23,6 +23,7 @@ namespace Veldrid.MTL
                 MTLRenderPassColorAttachmentDescriptor colorDescriptor = ret.colorAttachments[(uint)i];
                 colorDescriptor.texture = mtlTarget.DeviceTexture;
                 colorDescriptor.loadAction = MTLLoadAction.Load;
+                colorDescriptor.storeAction = MTLStoreAction.Store;
                 colorDescriptor.slice = (UIntPtr)colorTarget.ArrayLayer;
                 colorDescriptor.level = (UIntPtr)colorTarget.MipLevel;
             }

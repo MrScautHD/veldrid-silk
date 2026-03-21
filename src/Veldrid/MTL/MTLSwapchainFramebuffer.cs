@@ -86,12 +86,14 @@ namespace Veldrid.MTL
             var color0 = ret.colorAttachments[0];
             color0.texture = _parentSwapchain.CurrentDrawable.texture;
             color0.loadAction = MTLLoadAction.Load;
+            color0.storeAction = MTLStoreAction.Store;
 
             if (_depthTarget != null)
             {
                 var depthAttachment = ret.depthAttachment;
                 depthAttachment.texture = _depthTexture.DeviceTexture;
                 depthAttachment.loadAction = MTLLoadAction.Load;
+                depthAttachment.storeAction = MTLStoreAction.Store;
             }
 
             return ret;

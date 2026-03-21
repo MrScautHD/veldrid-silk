@@ -113,6 +113,7 @@ namespace Veldrid.MTL
             _metalLayer.device = _gd.Device;
             _metalLayer.pixelFormat = MTLFormats.VdToMTLPixelFormat(format, false);
             _metalLayer.framebufferOnly = true;
+            _metalLayer.opaque = true;
             _metalLayer.contentsScale = _drawableScale;
             _metalLayer.drawableSize = new CGSize(width, height);
 

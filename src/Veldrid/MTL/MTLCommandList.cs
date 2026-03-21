@@ -952,7 +952,7 @@ namespace Veldrid.MTL
             {
                 if (_clearColors[i] != null)
                 {
-                    var attachment = rpDesc.colorAttachments[0];
+                    var attachment = rpDesc.colorAttachments[i];
                     attachment.loadAction = MTLLoadAction.Clear;
                     RgbaFloat c = _clearColors[i].Value;
                     attachment.clearColor = new MTLClearColor(c.R, c.G, c.B, c.A);
