@@ -54,6 +54,11 @@ namespace Veldrid.MTL
             }
 
             Function = Library.newFunctionWithName(description.EntryPoint);
+            if (Function.NativePtr == IntPtr.Zero && description.EntryPoint == "main")
+            {
+                // SPIRV-Cross MSL commonly emits entry points named "main0".
+                Function = Library.newFunctionWithName("main0");
+            }
             if (Function.NativePtr == IntPtr.Zero)
             {
                 throw new VeldridException(
