@@ -52,8 +52,8 @@ namespace Veldrid.MTL
                 _nsView = contentView;
                 _drawableScale = nswindow.backingScaleFactor;
                 CGSize windowContentSize = contentView.frame.size;
-                width = (uint)(windowContentSize.width * _drawableScale);
-                height = (uint)(windowContentSize.height * _drawableScale);
+                width = (uint)Math.Ceiling((double)windowContentSize.width * _drawableScale);
+                height = (uint)Math.Ceiling((double)windowContentSize.height * _drawableScale);
 
                 if (!CAMetalLayer.TryCast(contentView.layer, out _metalLayer))
                 {
@@ -62,7 +62,6 @@ namespace Veldrid.MTL
                     contentView.layer = _metalLayer.NativePtr;
                 }
 
-                _metalLayer.frame = contentView.frame;
             }
             else if (source is NSViewSwapchainSource nsViewSource)
             {
@@ -71,8 +70,8 @@ namespace Veldrid.MTL
                 NSWindow ownerWindow = contentView.window;
                 _drawableScale = ownerWindow.NativePtr != IntPtr.Zero ? ownerWindow.backingScaleFactor : 1;
                 CGSize windowContentSize = contentView.frame.size;
-                width = (uint)(windowContentSize.width * _drawableScale);
-                height = (uint)(windowContentSize.height * _drawableScale);
+                width = (uint)Math.Ceiling((double)windowContentSize.width * _drawableScale);
+                height = (uint)Math.Ceiling((double)windowContentSize.height * _drawableScale);
 
                 if (!CAMetalLayer.TryCast(contentView.layer, out _metalLayer))
                 {
@@ -81,7 +80,6 @@ namespace Veldrid.MTL
                     contentView.layer = _metalLayer.NativePtr;
                 }
 
-                _metalLayer.frame = contentView.frame;
             }
             else if (source is UIViewSwapchainSource uiViewSource)
             {
@@ -90,8 +88,8 @@ namespace Veldrid.MTL
 
                 _uiView = new UIView(uiViewSource.UIView);
                 CGSize viewSize = _uiView.frame.size;
-                width = (uint)(viewSize.width * _drawableScale);
-                height = (uint)(viewSize.height * _drawableScale);
+                width = (uint)Math.Ceiling((double)viewSize.width * _drawableScale);
+                height = (uint)Math.Ceiling((double)viewSize.height * _drawableScale);
 
                 if (!CAMetalLayer.TryCast(_uiView.layer, out _metalLayer))
                 {
@@ -150,8 +148,8 @@ namespace Veldrid.MTL
             {
                 UIScreen mainScreen = UIScreen.mainScreen;
                 _drawableScale = mainScreen.nativeScale;
-                width = (uint)(width * _drawableScale);
-                height = (uint)(height * _drawableScale);
+                width = (uint)Math.Ceiling(width * _drawableScale);
+                height = (uint)Math.Ceiling(height * _drawableScale);
 
                 _metalLayer.frame = _uiView.frame;
             }
@@ -159,10 +157,8 @@ namespace Veldrid.MTL
             {
                 NSWindow ownerWindow = _nsView.window;
                 _drawableScale = ownerWindow.NativePtr != IntPtr.Zero ? ownerWindow.backingScaleFactor : 1;
-                width = (uint)(width * _drawableScale);
-                height = (uint)(height * _drawableScale);
-
-                _metalLayer.frame = _nsView.frame;
+                width = (uint)Math.Ceiling(width * _drawableScale);
+                height = (uint)Math.Ceiling(height * _drawableScale);
             }
 
             _framebuffer.Resize(width, height);
@@ -171,10 +167,6 @@ namespace Veldrid.MTL
             if (_uiView.NativePtr != IntPtr.Zero)
             {
                 _metalLayer.frame = _uiView.frame;
-            }
-            else if (_nsView.NativePtr != IntPtr.Zero)
-            {
-                _metalLayer.frame = _nsView.frame;
             }
             GetNextDrawable();
         }

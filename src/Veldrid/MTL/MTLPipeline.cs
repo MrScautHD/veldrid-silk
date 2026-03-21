@@ -59,7 +59,7 @@ namespace Veldrid.MTL
                 {
                     // Need to create specialized MTLFunction.
                     MTLFunctionConstantValues constantValues = CreateConstantValues(description.ShaderSet.Specializations);
-                    specializedFunction = mtlShader.Library.newFunctionWithNameConstantValues(mtlShader.EntryPoint, constantValues);
+                    specializedFunction = CreateSpecializedFunction(mtlShader, constantValues);
                     AddSpecializedFunction(specializedFunction);
                     ObjectiveCRuntime.release(constantValues.NativePtr);
 
@@ -226,7 +226,7 @@ namespace Veldrid.MTL
             {
                 // Need to create specialized MTLFunction.
                 MTLFunctionConstantValues constantValues = CreateConstantValues(description.Specializations);
-                specializedFunction = mtlShader.Library.newFunctionWithNameConstantValues(mtlShader.EntryPoint, constantValues);
+                specializedFunction = CreateSpecializedFunction(mtlShader, constantValues);
                 AddSpecializedFunction(specializedFunction);
                 ObjectiveCRuntime.release(constantValues.NativePtr);
 
@@ -279,6 +279,19 @@ namespace Veldrid.MTL
             }
 
             return ret;
+        }
+
+        private MTLFunction CreateSpecializedFunction(MTLShader shader, MTLFunctionConstantValues constantValues)
+        {
+            try
+            {
+                return shader.Library.newFunctionWithNameConstantValues(shader.EntryPoint, constantValues);
+            }
+            catch (Exception) when (shader.EntryPoint == "main")
+            {
+                // SPIRV-Cross MSL commonly emits entry points named "main0".
+                return shader.Library.newFunctionWithNameConstantValues("main0", constantValues);
+            }
         }
 
         private void AddSpecializedFunction(MTLFunction function)
