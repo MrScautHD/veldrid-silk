@@ -49,6 +49,12 @@ namespace Veldrid.MetalBindings
             set => objc_msgSend(NativePtr, sel_setDrawableSize, value);
         }
 
+        public CGFloat contentsScale
+        {
+            get => CGFloat_objc_msgSend(NativePtr, "contentsScale");
+            set => objc_msgSend(NativePtr, "setContentsScale:", value);
+        }
+
         public CGRect frame
         {
             get => CGRect_objc_msgSend(NativePtr, "frame");

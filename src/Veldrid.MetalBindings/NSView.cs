@@ -32,5 +32,7 @@ namespace Veldrid.MetalBindings
                     : objc_msgSend_stret<CGRect>(NativePtr, "frame");
             }
         }
+
+        public NSWindow window => objc_msgSend<NSWindow>(NativePtr, "window");
     }
 }
