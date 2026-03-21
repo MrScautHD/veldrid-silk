@@ -146,6 +146,7 @@ namespace Veldrid.SPIRV
                 case GraphicsBackend.Direct3D11:
                 case GraphicsBackend.OpenGL:
                 case GraphicsBackend.OpenGLES:
+                case GraphicsBackend.Metal:
                     return Encoding.ASCII.GetBytes(code);
                 default:
                     throw new SpirvCompilationException($"Invalid GraphicsBackend: {backend}");
@@ -162,6 +163,8 @@ namespace Veldrid.SPIRV
                     return CrossCompileTarget.GLSL;
                 case GraphicsBackend.OpenGLES:
                     return CrossCompileTarget.ESSL;
+                case GraphicsBackend.Metal:
+                    return CrossCompileTarget.MSL;
                 default:
                     throw new SpirvCompilationException($"Invalid GraphicsBackend: {backend}");
             }
